@@ -3,17 +3,21 @@
 members = [
     "arkworks/native-gadgets",
     # R1CS gadgets + circuits
-    "arkworks/r1cs-circuits",
+    # "arkworks/r1cs-circuits",
     "arkworks/r1cs-gadgets",
     # Utils and setups
-    "arkworks/setups",
     "arkworks/utils",
-    "arkworks/benchmarks",
 ]
 
 exclude = [
+    "arkworks/r1cs-circuits",
     "arkworks/plonk-hashing",
     "arkworks/plonk-gadgets",
     "arkworks/plonk-circuits",
-    "arkworks/utils"
+    "arkworks/setups",
+    "arkworks/benchmarks",
 ]
+
+[patch.crates-io]
+hashbrown = { version = "0.13.0", git = "https://github.com/rust-lang/hashbrown.git", tag = "v0.13.1" }
+ahash = { version = "0.8.0", git = "https://github.com/tkaitchuck/aHash.git", tag = "v0.8.0" }

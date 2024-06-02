@@ -7,7 +7,7 @@ use ark_std::{boxed::Box, vec::Vec};
 pub extern crate ark_std;
 
 pub mod merkle_tree;
-pub mod mimc;
+// pub mod mimc;
 pub mod poseidon;
 
 pub type Error = Box<dyn ark_std::error::Error>;
@@ -41,14 +41,14 @@ pub fn to_field_elements<F: PrimeField>(bytes: &[u8]) -> Result<Vec<F>, Error> {
 	// Read the chunks into arkworks to convert into field elements.
 	let res = reversed_chunks
 		.chunks(max_size_bytes)
-		.map(F::read)
-		.collect::<Result<Vec<_>, _>>()?;
+		.map(F::from_le_bytes_mod_order)
+		.collect::<Vec<_>>();
 	Ok(res)
 }
 
 pub fn from_field_elements<F: PrimeField>(elts: &[F]) -> Result<Vec<u8>, Error> {
 	let res = elts.iter().fold(vec![], |mut acc, prev| {
-		acc.extend_from_slice(&prev.into_repr().to_bytes_be());
+		acc.extend_from_slice(&prev.into_bigint().to_bytes_be());
 		acc
 	});
 
